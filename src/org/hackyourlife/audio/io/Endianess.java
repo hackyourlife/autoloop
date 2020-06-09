@@ -1,3 +1,5 @@
+package org.hackyourlife.audio.io;
+
 public class Endianess {
 	public static short get16bitBE(byte[] data) {
 		return get16bitBE(data, 0);
@@ -103,6 +105,13 @@ public class Endianess {
 		return data;
 	}
 
+	public static byte[] set24bitBE(byte[] data, int offset, int value) {
+		data[offset] = (byte) (value >> 16);
+		data[offset + 1] = (byte) (value >> 8);
+		data[offset + 2] = (byte) value;
+		return data;
+	}
+
 	public static byte[] set32bitBE(byte[] data, int offset, int value) {
 		data[offset] = (byte) (value >> 24);
 		data[offset + 1] = (byte) (value >> 16);
@@ -136,6 +145,13 @@ public class Endianess {
 	public static byte[] set16bitLE(byte[] data, int offset, short value) {
 		data[offset] = (byte) value;
 		data[offset + 1] = (byte) (value >> 8);
+		return data;
+	}
+
+	public static byte[] set24bitLE(byte[] data, int offset, int value) {
+		data[offset] = (byte) value;
+		data[offset + 1] = (byte) (value >> 8);
+		data[offset + 2] = (byte) (value >> 16);
 		return data;
 	}
 
@@ -173,6 +189,10 @@ public class Endianess {
 		return set16bitBE(data, 0, value);
 	}
 
+	public static byte[] set24bitBE(byte[] data, int value) {
+		return set24bitBE(data, 0, value);
+	}
+
 	public static byte[] set32bitBE(byte[] data, int value) {
 		return set32bitBE(data, 0, value);
 	}
@@ -191,6 +211,10 @@ public class Endianess {
 
 	public static byte[] set16bitLE(byte[] data, short value) {
 		return set16bitLE(data, 0, value);
+	}
+
+	public static byte[] set24bitLE(byte[] data, int value) {
+		return set24bitLE(data, 0, value);
 	}
 
 	public static byte[] set32bitLE(byte[] data, int value) {

@@ -1,3 +1,5 @@
+package org.hackyourlife.audio.io;
+
 import java.io.IOException;
 import java.io.InputStream;
 
