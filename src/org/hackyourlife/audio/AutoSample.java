@@ -262,13 +262,20 @@ public class AutoSample {
 
 			Loop loop = result.get(0);
 			int[][] trimmed = new int[nch][loop.end + 1];
-			int[][] xfade = new int[nch][xfadelen];
-			for(int ch = 0; ch < nch; ch++) {
-				System.arraycopy(samples[ch], 0, trimmed[ch], 0, trimmed[ch].length);
-				System.arraycopy(samples[ch], loop.start - xfadelen, xfade[ch], 0, xfadelen);
-			}
+			if(loop.start - xfadelen >= 0) {
+				int[][] xfade = new int[nch][xfadelen];
+				for(int ch = 0; ch < nch; ch++) {
+					System.arraycopy(samples[ch], 0, trimmed[ch], 0, trimmed[ch].length);
+					System.arraycopy(samples[ch], loop.start - xfadelen, xfade[ch], 0, xfadelen);
+				}
 
-			CrossFader.crossfade(trimmed, xfade, loop.end - xfadelen);
+				CrossFader.crossfade(trimmed, xfade, loop.end - xfadelen);
+			} else {
+				System.out.println("crossfade is not possible");
+				for(int ch = 0; ch < nch; ch++) {
+					System.arraycopy(samples[ch], 0, trimmed[ch], 0, trimmed[ch].length);
+				}
+			}
 
 			int note = key;
 			if(note == -1) {
