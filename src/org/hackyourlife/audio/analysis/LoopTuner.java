@@ -113,9 +113,6 @@ public class LoopTuner {
 			i += l.length;
 		}
 
-		// sort result according to score
-		Arrays.sort(loops);
-
 		// remove null results
 		int nonnull = 0;
 		for(Loop loop : loops) {
@@ -123,15 +120,26 @@ public class LoopTuner {
 				nonnull++;
 			}
 		}
+
+		Loop[] result;
 		if(nonnull == 0) {
 			return null;
 		} else if(nonnull != loops.length) {
-			Loop[] result = new Loop[nonnull];
-			System.arraycopy(loops, 0, result, 0, result.length);
-			return result;
+			result = new Loop[nonnull];
+			int j;
+			for(i = 0, j = 0; i < loops.length; i++) {
+				if(loops[i] != null) {
+					result[j++] = loops[i];
+				}
+			}
 		} else {
-			return loops;
+			result = loops;
 		}
+
+		// sort result according to score
+		Arrays.sort(result);
+
+		return result;
 	}
 
 	public static float estimate(float[][] samples, int start, int end, int tailLength) {
